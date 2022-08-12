@@ -17,6 +17,15 @@ class CreateImagesTable extends Migration
             $table->bigIncrements('id');
             $table->string('url');
             $table->unsignedBigInteger('hasil_survey_id');
+            $table->boolean('depan')->default(false);
+            $table->boolean('belakang')->default(false);
+            $table->boolean('kanan')->default(false);
+            $table->boolean('kiri')->default(false);
+            $table->boolean('ruang_tamu')->default(false);
+            $table->boolean('ruang_tidur')->default(false);
+            $table->boolean('kamar_mandi')->default(false);
+            $table->boolean('dapur')->default(false);
+            $table->boolean('kks')->default(false);
             $table->timestamps();
         });
     }

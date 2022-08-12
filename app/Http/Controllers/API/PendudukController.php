@@ -11,12 +11,23 @@ use Illuminate\Http\Request;
 
 class PendudukController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $penduduk = Penduduk::with(['district', 'village', 'status'])->get();
+        $status_survey = $request->input('status_survey');
+        $district_id = $request->input('district_id');
+
+        $penduduk = Penduduk::with(['district', 'village', 'status', 'hasilSurvey']);
+
+        if($status_survey){
+            $penduduk->where('status_survey', $status_survey);
+        }
+        if($district_id){
+            $penduduk->where('district_id', $district_id);
+        }
+
         if ($penduduk) {
             return ResponseFormatter::success(
-                $penduduk,
+                $penduduk->get(),
                 'Data Penduduk Berhasil ditampilkan'
             );
         } else {
@@ -47,6 +58,8 @@ class PendudukController extends Controller
     public function searchByDistrict(Request $request)
     {
         $penduduk = Penduduk::where('district_id', $request->input('district_id'))->get();
+
+
         if ($penduduk) {
             return ResponseFormatter::success(
                 $penduduk,

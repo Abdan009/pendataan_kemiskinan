@@ -11,8 +11,19 @@ class HasilSurvei extends Model
 
     protected $table = 'hasil_surveis';
     protected $fillable = [
-        'id_penduduk', 'id_opsi_jawaban', 'tanggal'
+        'id','id_penduduk', 'id_opsi_jawaban', 'tanggal'
     ];
+
+
+    protected $appends = ['photos',];
+
+    public function getPhotosAttribute()
+    {
+        return Image::where('hasil_survey_id', $this->id)->get();
+    }
+
+    
+
 
 
     public function opsiJawaban()
