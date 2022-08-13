@@ -15,6 +15,7 @@ class PendudukController extends Controller
     {
         $status_survey = $request->input('status_survey');
         $district_id = $request->input('district_id');
+        $nama = $request->input('nama');
 
         $penduduk = Penduduk::with(['district', 'village', 'status', 'hasilSurvey']);
 
@@ -24,6 +25,10 @@ class PendudukController extends Controller
         if($district_id){
             $penduduk->where('district_id', $district_id);
         }
+        if($nama){
+            $penduduk->where('nama', 'like', '%' . $nama . '%');
+        }
+
 
         if ($penduduk) {
             return ResponseFormatter::success(
